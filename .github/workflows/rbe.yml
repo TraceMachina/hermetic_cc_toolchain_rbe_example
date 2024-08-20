@@ -1,0 +1,31 @@
+name: NativeLink Cloud RBE Example
+on: workflow_dispatch
+
+env:
+  NL_ACCOUNT_ID: bclark8923
+  NL_SERVER_ID: d21fad
+
+jobs:
+  run-nativelink-rbe:
+    name: NativeLink Cloud RBE
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout under $GITHUB_WORKSPACE
+        uses: actions/checkout@main
+
+      - uses: bazel-contrib/setup-bazel@0.8.5
+        with:
+          external-cache: true
+          bazelisk-cache: true
+
+      - name: Run Bazel build
+        shell: bash
+        run: |
+          bazel build \
+            --remote_cache=grpcs://cas-${{ env.NL_ACCOUNT_ID}}-${{ env.NL_SERVER_ID}}.build-faster.nativelink.net:443 \
+            --remote_executor=grpcs://scheduler-${{ env.NL_ACCOUNT_ID}}-${{ env.NL_SERVER_ID}}.build-faster.nativelink.net:443 \
+            --remote_header=${{ secrets.NATIVELINK_COM_API_HEADER }} \
+            --bes_backend=grpcs://bes-${{ env.NL_ACCOUNT_ID}}-${{ env.NL_SERVER_ID}}.build-faster.nativelink.net:443 \
+            --bes_header=${{ secrets.NATIVELINK_COM_API_HEADER }} \
+            --bes_results_url=https://app.nativelink.com/a/${{ env.NL_ACCOUNT_ID}}/build \
+            //...
