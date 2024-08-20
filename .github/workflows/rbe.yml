@@ -28,4 +28,5 @@ jobs:
             --bes_backend=grpcs://bes-${{ env.NL_ACCOUNT_ID}}-${{ env.NL_SERVER_ID}}.build-faster.nativelink.net:443 \
             --bes_header=x-nativelink-api-key=${{ secrets.NATIVELINK_COM_API_HEADER }} \
             --bes_results_url=https://app.nativelink.com/a/${{ env.NL_ACCOUNT_ID}}/build \
+            --platform_suffix=${{ github.run_id }}-${{ github.run_attempt }} \
             //...
