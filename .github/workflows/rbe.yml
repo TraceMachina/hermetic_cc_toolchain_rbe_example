@@ -22,6 +22,7 @@ jobs:
         shell: bash
         run: |
           bazel build \
+            --remote_default_exec_properties=container-image=docker://default:latest \
             --remote_cache=grpcs://cas-${{ env.NL_ACCOUNT_ID}}-${{ env.NL_SERVER_ID}}.build-faster.nativelink.net:443 \
             --remote_executor=grpcs://scheduler-${{ env.NL_ACCOUNT_ID}}-${{ env.NL_SERVER_ID}}.build-faster.nativelink.net:443 \
             --remote_header=x-nativelink-api-key=${{ secrets.NATIVELINK_COM_API_HEADER }} \
