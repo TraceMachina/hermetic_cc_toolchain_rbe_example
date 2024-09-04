@@ -1,4 +1,4 @@
-# Copyright 2023 Uber Technologies, Inc.
+# Copyright 2024 Trace Machina, Inc.
 # Licensed under the MIT License
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
